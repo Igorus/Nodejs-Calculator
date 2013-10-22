@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>My first NodeJS calculator</title>
+		<link href="/public/bs/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/public/style.css" rel="stylesheet">
+		<script src="/public/jquery.min.js"></script>
+		<script src="/public/bs/js/bootstrap.min.js"></script>
+		<style>
+			body {
+			  background-color: #eee;
+			}
+			
+			.form-control {
+				margin-bottom: 5px;
+			}
+		</style>
+	</head>
+  <body>
+
+    <div class="container">
+		<div class="col-lg-4 col-lg-offset-4">
+		  <div class="form-signin">
+			<h2 class="form-signin-heading">Calculator</h2>
+			<div>
+				<input type="text" class="form-control" id="val1" name="name" placeholder="First value" value="" autofocus>
+			</div>
+			<div>
+				<input type="text" class="form-control" id="val2" name="email" placeholder="Second value" value="">
+			</div>
+			<button class="btn btn-primary" type="submit" name="submit" value="plus" onClick="getResult(1)">+</button>
+			<button class="btn btn-primary" type="submit" name="submit" value="minus" onClick="getResult(2)">-</button>
+			<button class="btn btn-primary" type="submit" name="submit" value="mult" onClick="getResult(3)">*</button>
+			<button class="btn btn-primary" type="submit" name="submit" value="div" onClick="getResult(4)">/</button>
+		  </div>
+		</div>
+		<div class="col-lg-4 col-lg-offset-4" id="result">
+			
+		</div>
+    </div>
+	<script>
+		function getResult(op) {
+			var v1 = parseInt($( "#val1" ).val());
+			var v2 = parseInt($( "#val2" ).val());
+
+			var posting = $.post( "/calculate", {"v1": v1, "v2":v2, "op": op} );
+			
+			posting.done(function(data){
+				$("#result").empty().append( "<br><h2>Result: " + data.result + "</h2>");
+			});
+		 
+		} 
+	</script>
+  </body>
+</html>
